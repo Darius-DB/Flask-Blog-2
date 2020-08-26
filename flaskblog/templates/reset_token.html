@@ -1,0 +1,93 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<!-- Page password
+       ================================================== -->
+<section id="page-password">
+
+    <div class="row">
+
+        <div class="twelve columns">
+
+            <h1>Add Post<span>.</span></h1>
+            <p>Add a post so you can share your thoughts and ideas with everyone.</p>
+
+        </div>
+
+    </div> <!-- /row -->
+
+</section> <!-- /page-password -->
+
+
+<section id="contact">
+    <div class="row form-section">
+
+        <div id="contact-form" class="twelve columns">
+
+            <form method="POST" action="" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <fieldset>
+
+                    <div class="row">
+
+                        <div class="twelve columns mob-whole">
+
+                            {{ form.password.label }}
+
+                            {% if form.password.errors %}
+                            {{ form.password(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.password(placeholder='Password') }}
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="twelve columns mob-whole">
+
+
+                            {{ form.confirm_password.label }}
+
+                            {% if form.confirm_password.errors %}
+                            {{ form.confirm_password(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.confirm_password.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ form.confirm_password(placeholder='Confirm password') }}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div>
+                        {{ form.submit(class='button primary full-width') }}
+                        <div id="image-loader">
+                            <img src="{{ url_for('static', filename='images/loader.gif') }}" alt="" />
+                        </div>
+                    </div>
+
+                </fieldset>
+
+            </form> <!-- /contactForm -->
+
+            <!-- message box -->
+            <div id="message-warning"></div>
+            <div id="message-success">
+                <i class="fa fa-check"></i>Your message was sent, thank you!<br />
+            </div>
+
+        </div> <!-- /contact-form -->
+
+    </div> <!-- /form-section -->
+</section>
+{% endblock content %}

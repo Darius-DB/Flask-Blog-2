@@ -1,0 +1,117 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+	<!-- Hero
+	   =================================================== -->
+	<section id="hero">
+	
+		<div class="row hero-content">
+	
+			<div class="twelve columns flex-container">
+	
+				<div id="hero-slider" class="flexslider">
+	
+					<ul class="slides">
+	
+						<!-- Slide -->
+						<li>
+							<div class="flex-caption">
+								<h1>Hello, we are puremedia. We make awesome and stunning digital stuff.</h1>
+								<p><a class="button stroke smoothscroll" href="#about">More About Us</a></p>
+							</div>
+						</li>
+	
+						<!-- Slide -->
+						<li>
+							<div class="flex-caption">
+								<h1>We imagine, craft and manage your brand in this new digital world.</h1>
+								<p><a class="button stroke smoothscroll" href="#portfolio">See Our Works</a></p>
+							</div>
+						</li>
+	
+						<!-- Slide -->
+						<li>
+							<div class="flex-caption">
+								<h1>Take a look at some of <a class="smoothscroll" href="#portfolio" title="">our
+										works</a> or <a class="smoothscroll" href="#contact" title="">contact us</a> to
+									discuss how we can help you.</h1>
+								<p><a class="button stroke smoothscroll" href="#contact">Get In Touch</a></p>
+							</div>
+						</li>
+	
+					</ul>
+	
+				</div> <!-- .flexslider -->
+	
+			</div> <!-- .flex-container -->
+	
+		</div> <!-- .hero-content -->
+	
+	</section> <!-- #hero -->
+
+
+	<!-- Portfolio
+	   ================================================== -->
+	<section id="portfolio">
+	
+		<div class="row section-head">
+	
+			<div class="twelve columns">
+	
+				<h1>Latest Posts<span>.</span></h1>
+	
+				<hr />
+	
+	
+			</div>
+	
+		</div>
+	
+		<div class="row items">
+	
+			<div class="twelve columns">
+	
+				<div id="portfolio-wrapper" class="bgrid-fourth s-bgrid-third mob-bgrid-half group">
+					{% for post in posts.items %}
+					<div class="bgrid item">
+						<div class="item-wrap">
+	
+							<a href="{{ url_for('post', post_id=post.id) }}">
+								<img src="{{ url_for('static', filename='images/' + post.image_1) }}" alt="Grizzly">
+								<div class="overlay"></div>
+								<div class="portfolio-item-meta">
+									<h5>{{ post.title }}</h5>
+									<p>{{  post.content|truncate(20)}}</p>
+								</div>
+							</a>
+	
+						</div>
+					</div> <!-- /item -->
+					{% endfor %}
+					
+					<nav class="pagination">
+					{% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+						{% if page_num %}
+							{% if posts.page == page_num %}
+								<a class="page-numbers current" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+							{% else %}
+								<a class="page-numbers" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+							{% endif %}
+						{% else %}
+							...
+						{% endif %}
+					{% endfor %}
+					</nav>
+					
+				</div> <!-- /portfolio-wrapper -->
+	
+			</div> <!-- /twelve -->
+	
+		</div> <!-- /row -->
+	
+	</section> <!-- /Portfolio -->
+
+	<hr />
+	
+	
+{% endblock content %}

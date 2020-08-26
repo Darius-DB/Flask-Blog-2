@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<!-- Page Title
+   ================================================== -->
+<section id="page-title">
+
+    <div class="row">
+
+        <div class="twelve columns">
+
+            <h1>{{ user.username }}<span>.</span></h1>
+            <h1>{{ posts.total }} Posts</h1>
+
+        </div>
+
+    </div> <!-- /row -->
+
+</section> <!-- /page-title -->
+
+
+<!-- Portfolio
+	   ================================================== -->
+<section id="portfolio">
+
+    <div class="row section-head">
+
+        <div class="twelve columns">
+
+            <h1>Latest Posts<span>.</span></h1>
+
+            <hr />
+
+
+        </div>
+
+    </div>
+
+    <div class="row items">
+
+        <div class="twelve columns">
+
+            <div id="portfolio-wrapper" class="bgrid-fourth s-bgrid-third mob-bgrid-half group">
+                {% for post in posts.items %}
+                <div class="bgrid item">
+                    <div class="item-wrap">
+
+                        <a href="{{ url_for('post', post_id=post.id) }}">
+                            <img src="{{ url_for('static', filename='images/' + post.image_1) }}" alt="Grizzly">
+                            <div class="overlay"></div>
+                            <div class="portfolio-item-meta">
+                                <h5>{{ post.title }}</h5>
+                                <p>{{  post.content|truncate(20)}}</p>
+                            </div>
+                        </a>
+
+                    </div>
+                </div> <!-- /item -->
+                {% endfor %}
+
+                <nav class="pagination">
+                    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                    {% if page_num %}
+                    {% if posts.page == page_num %}
+                    <a class="page-numbers current" href="{{ url_for('user_posts', page=page_num, username=user.username) }}">{{ page_num }}</a>
+                    {% else %}
+                    <a class="page-numbers" href="{{ url_for('user_posts', page=page_num, username=user.username) }}">{{ page_num }}</a>
+                    {% endif %}
+                    {% else %}
+                    ...
+                    {% endif %}
+                    {% endfor %}
+                </nav>
+
+            </div> <!-- /portfolio-wrapper -->
+
+        </div> <!-- /twelve -->
+
+    </div> <!-- /row -->
+
+</section> <!-- /Portfolio -->
+
+<hr />
+
+
+{% endblock content %}

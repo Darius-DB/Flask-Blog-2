@@ -1,0 +1,175 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+   <!-- Page Title
+   ================================================== -->
+   <section id="page-title">	
+   	  
+		<div class="row">
+
+			<div class="twelve columns">
+
+				<h1>Portfolio<span>.</span></h1>
+				<p>Aenean condimentum lacus sit amet luctus lobortis.</p>
+
+			</div>			    
+
+		</div> <!-- /row -->	   
+
+   </section> <!-- /page-title -->
+
+
+   <!-- Content
+   ================================================== -->
+   <section id="content">
+
+   	<div class="row portfolio-content">
+
+	   	<div class="entry tab-whole nine columns centered">
+
+	         <header class="entry-header">
+
+					<h1 class="entry-title">
+							{{ post.title }}
+					</h1> 				 
+						
+					<div class="entry-meta">
+						<ul>
+							<li>{{ post.date_posted.strftime('%Y-%m-%d') }}</li>
+							<span class="meta-sep">•</span>								
+							<li>
+								<a rel="skills tag" title="" href="{{ url_for('user_posts', username=post.author.username) }}">{{ post.author.username }}</a>, 
+								
+							</li>
+							<span class="meta-sep">•</span>
+							<li><a rel="client" title="" href="#">styleshout</a></li>
+						</ul>
+					</div> 
+						 
+				</header>
+
+				<div class="entry-content">
+					<p class="lead">{{ post.content }}</p>
+
+					
+				</div>
+
+				<div class="entry-content-media">
+					<div class="post-thumb">
+						<img src="{{ url_for('static', filename='images/' + post.image_1) }}">
+						<img src="{{ url_for('static', filename='images/' + post.image_2) }}">
+					</div> 
+				</div> 					 
+
+				{% if post.author == current_user %}
+					<div class="">
+						<a class="button round blue " href="{{ url_for('update_post', post_id=post.id) }}">Update</a>
+						<a class="button round red" href="{{ url_for('delete_post', post_id=post.id) }}">Delete</a>
+					</div>
+				{% endif %}
+
+				<div class="pagenav group">
+		  			  <span class="prev"><a href="{{ url_for('post', post_id=post.id-1) }}" rel="prev">Previous</a></span>
+		  			<span class="next"><a href="{{ url_for('post', post_id=post.id+1) }}" rel="next">Next</a></span>  				   
+	  			</div>  										   
+	         
+	    </div> <!-- /entry -->	      
+
+	</div> <!-- /portfolio-content -->
+
+	<div class="row">
+	   
+	<div id="main" class="tab-whole eight columns">
+		<div id="comments">
+		
+			<h3>{{ comments.total }}</h3>
+		
+			<ol class="commentlist">
+				{% for comment in comments %}
+				<li class="depth-1">
+		
+					<div class="avatar">
+						<img width="50" height="50" alt="" src="{{ url_for('static', filename='images/' + comment.comment.author.image_file) }}" class="avatar">
+					</div>
+		
+					<div class="comment-content">
+		
+						<div class="comment-info">
+							<cite>{{ comment.username }}</cite>
+		
+							<div class="comment-meta">
+								<time datetime="2014-07-12T23:05" class="comment-time">{{ comment.date_added.strftime('%Y-%m-%d') }}</time>
+								
+							</div>
+						</div>
+		
+						<div class="comment-text">
+							<p>{{ comment.content }}</p>
+						</div>
+		
+					</div>
+		
+				</li>
+				{% endfor %}
+			</ol> <!-- /commentlist -->
+		
+		
+			<!-- respond -->
+			<div class="respond">
+		
+				<h3>Leave a Comment</h3>
+		
+				<!-- form -->
+				<form action="" method="POST">
+					{{ form.hidden_tag() }}
+					<fieldset>
+		
+						<div class="group">
+							
+							
+							
+							{% if form.username.errors %}
+							{{ form.username(class="form-control is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.username.errors %}
+								<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+							{% else %}
+							{{ form.username(placeholder='Username') }}
+							{% endif %}
+						</div>
+		
+						
+		
+						<div class="message group">
+							
+							{{ form.content.label }}
+							
+							{% if form.content.errors %}
+							{{ form.content(class="form-control is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.content.errors %}
+								<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+							{% else %}
+							{{ form.content(placeholder='Content') }}
+							{% endif %}
+						</div>
+		
+						
+						{{ form.submit(class='button large orange') }}
+		
+					</fieldset>
+				</form> <!-- /contactForm -->
+		
+			</div> <!-- /respond -->
+		
+		</div> <!-- /comments -->
+	</div>
+	</div>
+	</section>
+
+
+{% endblock content %}

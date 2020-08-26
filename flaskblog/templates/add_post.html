@@ -1,0 +1,127 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<!-- Page Title
+       ================================================== -->
+<section id="page-title">
+
+    <div class="row">
+
+        <div class="twelve columns">
+
+            <h1>Add Post<span>.</span></h1>
+            <p>Add a post so you can share your thoughts and ideas with everyone.</p>
+
+        </div>
+
+    </div> <!-- /row -->
+
+</section> <!-- /page-title -->
+
+
+<section id="contact">
+    <div class="row form-section">
+
+        <div id="contact-form" class="twelve columns">
+
+            <form method="POST" action="" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <fieldset>
+
+                    <div class="row">
+
+                        <div class="twelve columns mob-whole">
+
+                            {{ form.title.label }}
+
+                            {% if form.title.errors %}
+                                {{ form.title(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.title.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.title(placeholder='Title') }}
+                            {% endif %}
+
+                        </div>
+
+                        
+
+                    </div>
+
+                    <div class="row">
+                        <div class="twelve columns mob-whole">
+                        
+                        
+                            {{ form.content.label }}
+                        
+                            {% if form.content.errors %}
+                                {{ form.content(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.content.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.content(placeholder='Content') }}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="six columns mob-whole">
+                            <div class="form-group">
+                                {{ form.image_1.label() }}
+                                {{ form.image_1(class="form-control-file") }}
+                                {% if form.image_1.errors %}
+                                    {% for error in form.image_1.errors %}
+                                        <span class="text-danger">{{ error }}</span></br>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="six columns mob-whole">
+                            <div class="form-group">
+                                {{ form.image_2.label() }}
+                                {{ form.image_2(class="form-control-file") }}
+                                {% if form.image_2.errors %}
+                                    {% for error in form.image_2.errors %}
+                                        <span class="text-danger">{{ error }}</span></br>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                    <div>
+                        {{ form.submit(class='button primary full-width') }}
+                        <div id="image-loader">
+                            <img src="{{ url_for('static', filename='images/loader.gif') }}" alt="" />
+                        </div>
+                    </div>
+
+                    
+
+                </fieldset>
+
+            </form> <!-- /contactForm -->
+
+            <!-- message box -->
+            <div id="message-warning"></div>
+            <div id="message-success">
+                <i class="fa fa-check"></i>Your message was sent, thank you!<br />
+            </div>
+
+        </div> <!-- /contact-form -->
+
+    </div> <!-- /form-section -->
+</section>
+{% endblock content %}
