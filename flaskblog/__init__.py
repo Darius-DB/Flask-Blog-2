@@ -34,3 +34,4 @@ from flaskblog.posts import routes
 from flaskblog.users import routes
 from flaskblog.main import routes
 from flaskblog.errors import handlers
+from flaskblog.api import routes

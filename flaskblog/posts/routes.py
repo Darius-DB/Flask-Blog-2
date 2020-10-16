@@ -30,7 +30,7 @@ def new_post():
 def post(post_id):
     form = CommentForm()
     post = Post.query.get_or_404(post_id)
-    comments = Comment.query.all()
+    comments = Comment.query.filter_by(post_id=post_id).all()
     if form.validate_on_submit():
         comment = Comment(name=form.username.data,
                           content=form.content.data, post_id=post.id)
